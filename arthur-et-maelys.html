@@ -1,709 +1,616 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stephens & Maëlys</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-dark: #07070a;
-            --bg-card: #0f0f14;
-            --accent-gold: #d4af85;
-            --accent-beige: #c9b8a8;
-            --text-light: #e8e6e1;
-            --text-muted: #a8a399;
-            --line-subtle: rgba(212, 175, 133, 0.08);
-            --line-accent: rgba(212, 175, 133, 0.15);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Jost', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* ========== FOND ANIMÉ ==========*/
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(212, 175, 133, 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(201, 184, 168, 0.02) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Particules étoiles discrètes */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(2px 2px at 20% 30%, rgba(212, 175, 133, 0.1), rgba(212, 175, 133, 0)),
-                radial-gradient(2px 2px at 60% 70%, rgba(212, 175, 133, 0.08), rgba(212, 175, 133, 0)),
-                radial-gradient(1px 1px at 50% 50%, rgba(212, 175, 133, 0.12), rgba(212, 175, 133, 0)),
-                radial-gradient(1px 1px at 80% 10%, rgba(212, 175, 133, 0.09), rgba(212, 175, 133, 0)),
-                radial-gradient(2px 2px at 90% 60%, rgba(212, 175, 133, 0.1), rgba(212, 175, 133, 0)),
-                radial-gradient(1px 1px at 30% 80%, rgba(212, 175, 133, 0.08), rgba(212, 175, 133, 0)),
-                radial-gradient(1px 1px at 70% 40%, rgba(212, 175, 133, 0.11), rgba(212, 175, 133, 0));
-            background-size: 200% 200%;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            z-index: 0;
-            animation: shimmer 8s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.8; }
-        }
-
-        /* ========== NAVIGATION ==========*/
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            background: rgba(7, 7, 10, 0.8);
-            border-bottom: 1px solid var(--line-subtle);
-            padding: 1.2rem 2rem;
-        }
-
-        nav .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            font-weight: 500;
-            letter-spacing: 2px;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent-gold);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-gold);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        @media (max-width: 768px) {
-            nav .container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-links {
-                gap: 1.5rem;
-                justify-content: center;
-            }
-
-            nav {
-                padding: 1rem;
-            }
-        }
-
-        /* ========== CONTENT WRAPPER ==========*/
-        main {
-            position: relative;
-            z-index: 1;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* ========== HERO ==========*/
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 6rem 2rem 4rem;
-            margin-top: 60px;
-            animation: fadeInUp 1.2s ease-out;
-        }
-
-        .hero-content h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(3rem, 10vw, 5.5rem);
-            font-weight: 500;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-        }
-
-        .hero-subtitle {
-            font-size: 0.95rem;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-        }
-
-        .heart-symbol {
-            display: inline-block;
-            font-size: 1.5rem;
-            margin: 0 0.5rem;
-            animation: heartbeat 1.5s ease-in-out infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.2); opacity: 1; }
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-            font-weight: 300;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            border: 1px solid var(--accent-gold);
-            background: transparent;
-            color: var(--accent-gold);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-family: 'Jost', sans-serif;
-            font-weight: 500;
-        }
-
-        .cta-button:hover {
-            background: var(--accent-gold);
-            color: var(--bg-dark);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ========== SECTIONS ==========*/
-        section {
-            padding: 8rem 0;
-            border-top: 1px solid var(--line-subtle);
-            opacity: 0;
-            animation: fadeInSection 0.8s ease-out forwards;
-        }
-
-        @keyframes fadeInSection {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        section:nth-child(2) { animation-delay: 0.1s; }
-        section:nth-child(3) { animation-delay: 0.2s; }
-        section:nth-child(4) { animation-delay: 0.3s; }
-        section:nth-child(5) { animation-delay: 0.4s; }
-        section:nth-child(6) { animation-delay: 0.5s; }
-        section:nth-child(7) { animation-delay: 0.6s; }
-
-        section h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 400;
-            letter-spacing: 1px;
-            margin-bottom: 2.5rem;
-            color: var(--text-light);
-            text-align: center;
-        }
-
-        /* ========== SECTION AMOUR ==========*/
-        .section-amour .main-title {
-            font-size: clamp(3.5rem, 8vw, 5rem);
-            color: var(--accent-gold);
-            font-weight: 400;
-            letter-spacing: 2px;
-            margin: 2rem 0;
-        }
-
-        .section-amour .description {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.9;
-            font-style: italic;
-        }
-
-        /* ========== SECTION VIE SANS TOI ==========*/
-        .section-sans-toi {
-            background: linear-gradient(180deg, 
-                rgba(212, 175, 133, 0.02) 0%, 
-                rgba(7, 7, 10, 0) 100%);
-        }
-
-        .section-sans-toi .quote {
-            font-size: 1.3rem;
-            color: var(--accent-beige);
-            text-align: center;
-            font-style: italic;
-            max-width: 700px;
-            margin: 2rem auto;
-            line-height: 1.8;
-        }
-
-        .section-sans-toi .description {
-            font-size: 1rem;
-            color: var(--text-muted);
-            text-align: center;
-            max-width: 600px;
-            margin: 2rem auto 0;
-            line-height: 1.8;
-        }
-
-        /* ========== SECTION MOIS ==========*/
-        .months-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .month-card {
-            background: linear-gradient(135deg, 
-                rgba(212, 175, 133, 0.05) 0%, 
-                rgba(201, 184, 168, 0.02) 100%);
-            border: 1px solid var(--line-accent);
-            padding: 1.5rem;
-            text-align: center;
-            border-radius: 8px;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .month-card.current {
-            background: linear-gradient(135deg, 
-                rgba(212, 175, 133, 0.12) 0%, 
-                rgba(201, 184, 168, 0.06) 100%);
-            border-color: var(--accent-gold);
-            animation: subtle-glow 2s ease-in-out infinite;
-        }
-
-        @keyframes subtle-glow {
-            0%, 100% { 
-                box-shadow: 0 0 20px rgba(212, 175, 133, 0.1);
-            }
-            50% { 
-                box-shadow: 0 0 30px rgba(212, 175, 133, 0.15);
-            }
-        }
-
-        .month-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-weight: 500;
-            color: var(--accent-gold);
-            margin-bottom: 0.5rem;
-        }
-
-        .month-date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
-        }
-
-        .month-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-beige);
-        }
-
-        /* ========== SECTION TEMPS ==========*/
-        .time-counter {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .time-item {
-            text-align: center;
-            padding: 2rem 1rem;
-            background: linear-gradient(135deg, 
-                rgba(212, 175, 133, 0.05) 0%, 
-                rgba(201, 184, 168, 0.02) 100%);
-            border: 1px solid var(--line-accent);
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
-        }
-
-        .time-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .time-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            font-weight: 500;
-            color: var(--accent-gold);
-            line-height: 1;
-        }
-
-        .time-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 0.8rem;
-        }
-
-        /* ========== SECTION PETIT MOT ==========*/
-        .petit-mot {
-            text-align: center;
-            font-size: 1.15rem;
-            line-height: 1.9;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto;
-            font-style: italic;
-            padding: 3rem 0;
-            border-top: 1px solid var(--line-subtle);
-            border-bottom: 1px solid var(--line-subtle);
-        }
-
-        /* ========== FOOTER ==========*/
-        footer {
-            background: linear-gradient(180deg, 
-                rgba(7, 7, 10, 0) 0%, 
-                rgba(15, 15, 20, 1) 100%);
-            border-top: 1px solid var(--line-subtle);
-            padding: 6rem 2rem;
-            text-align: center;
-            margin-top: 8rem;
-        }
-
-        footer .logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-            color: var(--accent-gold);
-            margin-bottom: 1.5rem;
-        }
-
-        footer p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            margin: 0.5rem 0;
-        }
-
-        /* ========== RESPONSIVE ==========*/
-        @media (max-width: 768px) {
-            section {
-                padding: 5rem 0;
-            }
-
-            .hero {
-                margin-top: 120px;
-                padding: 4rem 1.5rem 3rem;
-            }
-
-            .months-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            .time-counter {
-                gap: 1rem;
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .time-item {
-                padding: 1.5rem 1rem;
-            }
-
-            .time-number {
-                font-size: 2rem;
-            }
-
-            footer {
-                padding: 4rem 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            section {
-                padding: 3rem 0;
-            }
-
-            .hero {
-                padding: 2rem 1rem 2rem;
-            }
-
-            section h2 {
-                margin-bottom: 1.5rem;
-            }
-
-            .months-grid,
-            .time-counter {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-button {
-                padding: 0.9rem 2rem;
-                font-size: 0.8rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stephens & Maëlys</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07070a;
+      --bg-soft: #0d0d12;
+      --panel: rgba(255, 255, 255, 0.02);
+      --panel-strong: rgba(255, 255, 255, 0.035);
+      --gold: #d4af85;
+      --gold-soft: #c9b18d;
+      --beige: #ddd2c6;
+      --text: #f4efe9;
+      --muted: #b9b0a8;
+      --line: rgba(212, 175, 133, 0.12);
+      --line-strong: rgba(212, 175, 133, 0.18);
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(212, 175, 133, 0.06), transparent 22%),
+        radial-gradient(circle at 85% 30%, rgba(185, 176, 168, 0.04), transparent 20%),
+        radial-gradient(circle at 50% 80%, rgba(212, 175, 133, 0.05), transparent 28%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(212, 175, 133, 0.7), transparent),
+        radial-gradient(1.5px 1.5px at 35% 35%, rgba(212, 175, 133, 0.6), transparent),
+        radial-gradient(2px 2px at 60% 18%, rgba(212, 175, 133, 0.55), transparent),
+        radial-gradient(1.5px 1.5px at 80% 30%, rgba(212, 175, 133, 0.5), transparent),
+        radial-gradient(1.5px 1.5px at 25% 75%, rgba(212, 175, 133, 0.45), transparent),
+        radial-gradient(2px 2px at 72% 68%, rgba(212, 175, 133, 0.6), transparent),
+        radial-gradient(1.5px 1.5px at 90% 70%, rgba(212, 175, 133, 0.5), transparent);
+      background-repeat: no-repeat;
+      opacity: 0.55;
+      animation: twinkle 8s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.3; }
+      100% { opacity: 0.7; }
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .container {
+      width: min(1100px, calc(100% - 2rem));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 7, 10, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+    }
+
+    .brand {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 1.1rem;
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 6rem;
+      position: relative;
+    }
+
+    .hero-card {
+      position: relative;
+      z-index: 1;
+      padding: 3rem 1rem 2rem;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 1.8rem;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      line-height: 1.06;
+      letter-spacing: 0.02em;
+    }
+
+    .hero h1 {
+      font-size: clamp(3.4rem, 9vw, 6.8rem);
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .heart {
+      display: inline-block;
+      color: var(--gold);
+      margin: 0 0.45rem;
+      animation: heartBeat 1.8s ease-in-out infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      25% { transform: scale(1.15); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.92; }
+    }
+
+    .hero-date {
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-copy {
+      max-width: 640px;
+      margin: 0 auto 2.6rem;
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.9;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 180px;
+      padding: 1rem 2rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    section {
+      padding: 7rem 0;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: var(--text);
+      margin-bottom: 2.5rem;
+    }
+
+    .amour-hero {
+      text-align: center;
+    }
+
+    .amour-word {
+      display: block;
+      font-size: clamp(4rem, 12vw, 8rem);
+      line-height: 1;
+      color: var(--gold);
+      margin: 1.5rem 0;
+    }
+
+    .amour-line {
+      max-width: 770px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.15rem;
+      line-height: 2;
+      font-style: italic;
+    }
+
+    .sans-toi {
+      background: linear-gradient(180deg, rgba(212, 175, 133, 0.02), rgba(7, 7, 10, 0));
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .quote {
+      max-width: 760px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      line-height: 1.5;
+      color: var(--beige);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+    }
+
+    .quote-sub {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 2;
+    }
+
+    .months-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .month-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 1.4rem 1rem;
+      text-align: center;
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+
+    .month-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212, 175, 133, 0.34);
+    }
+
+    .month-card.current {
+      background: linear-gradient(180deg, rgba(212, 175, 133, 0.08), rgba(255, 255, 255, 0.015));
+      border-color: rgba(212, 175, 133, 0.45);
+      box-shadow: 0 0 24px rgba(212, 175, 133, 0.08);
+    }
+
+    .month-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
+      color: var(--gold);
+      margin-bottom: 0.35rem;
+      line-height: 1.1;
+    }
+
+    .month-date {
+      color: var(--muted);
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(100px, 1fr));
+      gap: 1rem;
+      max-width: 680px;
+      margin: 2.5rem auto 0;
+    }
+
+    .time-box {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 1.3rem 0.8rem 1.1rem;
+      text-align: center;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    .time-box:hover {
+      transform: translateY(-4px);
+    }
+
+    .time-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 3.2rem);
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.45rem;
+    }
+
+    .time-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .little-note {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 2;
+      font-style: italic;
+      padding-top: 1rem;
+    }
+
+    footer {
+      padding: 5rem 1rem 4rem;
+      text-align: center;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--gold);
+      font-size: 2rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .footer-text {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 760px) {
+      .nav-links {
+        gap: 1rem;
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+      }
+
+      .hero {
+        padding-top: 7rem;
+      }
+
+      .countdown { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+      .months-grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+    }
+
+    @media (max-width: 480px) {
+      .nav-inner {
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.9rem;
+        padding: 1rem 0;
+      }
+
+      .months-grid, .countdown {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        font-size: 1rem;
+      }
+
+      .hero-date {
+        letter-spacing: 0.12em;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      section {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <div class="logo">S & M</div>
-            <ul class="nav-links">
-                <li><a href="#amour">Amour</a></li>
-                <li><a href="#temps">Temps</a></li>
-                <li><a href="#mois">Mois</a></li>
-            </ul>
+  <nav>
+    <div class="nav-inner">
+      <div class="brand">Stephens & Maëlys</div>
+      <ul class="nav-links">
+        <li><a href="#amour">Amour</a></li>
+        <li><a href="#mois">Mois</a></li>
+        <li><a href="#temps">Temps</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero reveal">
+      <div class="hero-card container">
+        <div class="eyebrow">8 septembre 2026 · pour toujours</div>
+        <h1>Stephens <span class="heart">♡</span> Maëlys</h1>
+        <div class="hero-date">8 septembre 2026 · pour toujours</div>
+        <p class="hero-copy">Deux personnes. Une histoire. Et tout ce qui reste à écrire ensemble.</p>
+        <a href="#amour" class="button">Découvrir</a>
+      </div>
+    </section>
+
+    <section id="amour" class="reveal">
+      <div class="container amour-hero">
+        <div class="eyebrow">mon amour pour toi</div>
+        <h2 class="section-title">mon amour pour toi en un mot</h2>
+        <span class="amour-word">L'art.</span>
+        <p class="amour-line">si l'amour était un art tu serais ma seule exposition</p>
+      </div>
+    </section>
+
+    <section class="sans-toi reveal">
+      <div class="container">
+        <h2 class="section-title">La vie sans toi</h2>
+        <p class="quote">La vie sans toi, ce serait comme un système solaire sans soleil.</p>
+        <p class="quote-sub">
+          Il y a des voix qu'on reconnaîtrait entre mille. La tienne est de celles-là. La vie sans toi ce serait comme un système solaire sans soleil : un vide qu'on ne sait pas nommer, mais qu'on sent au plus profond de soi.
+        </p>
+      </div>
+    </section>
+
+    <section id="mois" class="reveal">
+      <div class="container">
+        <h2 class="section-title">Nos mois</h2>
+        <p class="quote-sub" style="margin-bottom: 2rem; text-align: center; max-width: 700px;">
+          Chaque mois ajoute une nouvelle page à notre histoire.
+        </p>
+        <div class="months-grid" id="monthsGrid"></div>
+      </div>
+    </section>
+
+    <section id="temps" class="reveal">
+      <div class="container">
+        <h2 class="section-title">Notre temps</h2>
+        <div class="countdown">
+          <div class="time-box">
+            <div id="days" class="time-number">0</div>
+            <div class="time-label">jours</div>
+          </div>
+          <div class="time-box">
+            <div id="hours" class="time-number">0</div>
+            <div class="time-label">heures</div>
+          </div>
+          <div class="time-box">
+            <div id="minutes" class="time-number">0</div>
+            <div class="time-label">minutes</div>
+          </div>
+          <div class="time-box">
+            <div id="seconds" class="time-number">0</div>
+            <div class="time-label">secondes</div>
+          </div>
         </div>
-    </nav>
+      </div>
+    </section>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Stephens <span class="heart-symbol">♡</span> Maëlys</h1>
-                <div class="hero-subtitle">8 septembre 2026 · pour toujours</div>
-                <p class="hero-description">Deux personnes. Une histoire. Et tout ce qui reste à écrire ensemble.</p>
-                <a href="#amour" class="cta-button">Découvrir</a>
-            </div>
-        </section>
+    <section class="reveal">
+      <div class="container">
+        <p class="little-note">
+          Je ne sais pas tout ce que l'avenir nous réserve, mais je sais que je veux continuer à écrire cette histoire avec toi.
+        </p>
+      </div>
+    </section>
+  </main>
 
-        <!-- Section Amour -->
-        <section class="section-amour" id="amour">
-            <div class="container">
-                <h2>mon amour pour toi en un mot</h2>
-                <div class="main-title">L'art.</div>
-                <p class="description">si l'amour était un art tu serais ma seule exposition</p>
-            </div>
-        </section>
+  <footer>
+    <div class="footer-brand">Stephens & Maëlys</div>
+    <div class="footer-text">Love doesn't cost a thing — 2026</div>
+  </footer>
 
-        <!-- Section Vie Sans Toi -->
-        <section class="section-sans-toi">
-            <div class="container">
-                <h2>La vie sans toi</h2>
-                <p class="quote">La vie sans toi, ce serait comme un système solaire sans soleil.</p>
-                <p class="description">Tu apportes lumière, chaleur et sens à chaque instant. Avec toi, le monde trouve sa place, son équilibre et sa raison d'être.</p>
-            </div>
-        </section>
+  <script>
+    function updateCounter() {
+      const startDate = new Date('2026-09-08T00:00:00');
+      const now = new Date();
+      const diff = now - startDate;
 
-        <!-- Section Mois -->
-        <section class="section-mois" id="mois">
-            <div class="container">
-                <h2>Nos mois</h2>
-                <p style="text-align: center; color: var(--text-muted); font-size: 1rem; margin-bottom: 2rem;">Chaque mois ajoute une nouvelle page à notre histoire.</p>
-                <div class="months-grid" id="monthsContainer"></div>
-            </div>
-        </section>
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        <!-- Section Temps -->
-        <section class="section-temps" id="temps">
-            <div class="container">
-                <h2>Notre temps</h2>
-                <div class="time-counter">
-                    <div class="time-item">
-                        <div class="time-number" id="days">0</div>
-                        <div class="time-label">jours</div>
-                    </div>
-                    <div class="time-item">
-                        <div class="time-number" id="hours">0</div>
-                        <div class="time-label">heures</div>
-                    </div>
-                    <div class="time-item">
-                        <div class="time-number" id="minutes">0</div>
-                        <div class="time-label">minutes</div>
-                    </div>
-                    <div class="time-item">
-                        <div class="time-number" id="seconds">0</div>
-                        <div class="time-label">secondes</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
 
-        <!-- Section Petit Mot -->
-        <section>
-            <div class="container">
-                <p class="petit-mot">Je ne sais pas tout ce que l'avenir nous réserve, mais je sais que je veux continuer à écrire cette histoire avec toi.</p>
-            </div>
-        </section>
-    </main>
+    function generateMonths() {
+      const startDate = new Date('2026-09-08T00:00:00');
+      const now = new Date();
+      const container = document.getElementById('monthsGrid');
+      const currentMonthIndex = Math.max(1, ((now.getFullYear() - startDate.getFullYear()) * 12) + (now.getMonth() - startDate.getMonth()) + 1);
 
-    <!-- Footer -->
-    <footer>
-        <div class="logo">Stephens & Maëlys</div>
-        <p>Love doesn't cost a thing — 2026</p>
-    </footer>
+      container.innerHTML = '';
 
-    <script>
-        // Compteur temps réel
-        function updateCounter() {
-            const startDate = new Date('2025-09-08T00:00:00').getTime();
-            const now = new Date().getTime();
-            const distance = now - startDate;
+      for (let i = 1; i <= currentMonthIndex; i++) {
+        const monthDate = new Date(startDate.getFullYear(), startDate.getMonth() + i, 8);
+        const card = document.createElement('div');
+        card.className = 'month-card';
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const isCurrent = i === currentMonthIndex;
+        if (isCurrent) card.classList.add('current');
 
-            document.getElementById('days').textContent = days;
-            document.getElementById('hours').textContent = hours;
-            document.getElementById('minutes').textContent = minutes;
-            document.getElementById('seconds').textContent = seconds;
+        card.innerHTML = `
+          <div class="month-number">${i} mois</div>
+          <div class="month-date">${monthDate.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+        `;
 
-            return { days, hours, minutes, seconds };
+        container.appendChild(card);
+      }
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
         }
+      });
+    }, { threshold: 0.15 });
 
-        // Génération des mois
-        function generateMonths() {
-            const startDate = new Date('2025-09-08');
-            const now = new Date();
-            const container = document.getElementById('monthsContainer');
-            container.innerHTML = '';
-
-            let currentDate = new Date(startDate);
-            let monthCount = 1;
-
-            while (currentDate <= now) {
-                const nextDate = new Date(currentDate);
-                nextDate.setMonth(nextDate.getMonth() + 1);
-                
-                const isCurrent = currentDate <= now && nextDate > now;
-                const formattedDate = currentDate.toLocaleDateString('fr-FR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-
-                const monthCard = document.createElement('div');
-                monthCard.className = `month-card ${isCurrent ? 'current' : ''}`;
-                monthCard.innerHTML = `
-                    <div class="month-number">${monthCount} mois</div>
-                    <div class="month-date">${formattedDate}</div>
-                `;
-                container.appendChild(monthCard);
-
-                currentDate = nextDate;
-                monthCount++;
-            }
-        }
-
-        // Initialisation
-        updateCounter();
-        setInterval(updateCounter, 1000);
-        generateMonths();
-
-        // Smooth scroll pour les liens de navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    updateCounter();
+    setInterval(updateCounter, 1000);
+    generateMonths();
+  </script>
 </body>
 </html>
