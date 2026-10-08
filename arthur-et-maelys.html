@@ -6,7 +6,7 @@
     <title>Stephens & Maëlys</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
 
     <style>
         :root {
@@ -22,7 +22,6 @@
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
 
         body {
@@ -36,8 +35,8 @@
         }
 
         a { color: inherit; text-decoration: none; }
-
         section, header, footer { position: relative; overflow: hidden; }
+        .hidden { display: none !important; }
 
         .wrap {
             max-width: 1280px;
@@ -46,7 +45,8 @@
         }
 
         .eyebrow {
-            font-size: 0.68rem;
+            display: block;
+            font-size: 0.66rem;
             font-weight: 400;
             letter-spacing: 0.42em;
             text-transform: uppercase;
@@ -66,13 +66,12 @@
             font-family: var(--serif);
             font-weight: 300;
             line-height: 0.8;
-            color: rgba(200, 178, 143, 0.045);
+            color: rgba(200, 178, 143, 0.05);
             pointer-events: none;
             user-select: none;
             z-index: 0;
         }
 
-        /* ---------- Révélation au scroll ---------- */
         .reveal {
             opacity: 0;
             transform: translateY(36px);
@@ -80,13 +79,61 @@
         }
         .reveal.in { opacity: 1; transform: none; }
 
-        .h-title {
-            letter-spacing: 0.34em;
-            transition: letter-spacing 2.4s cubic-bezier(.2,.6,.2,1), opacity 2s ease;
+        #gate {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.4rem;
+            padding: 2rem;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% 40%, var(--noir-bleute) 0%, var(--noir) 70%);
+            transition: opacity 1.6s ease, visibility 1.6s;
         }
-        .h-title.reveal.in { letter-spacing: 0.12em; }
+        #gate.hidden { display: flex !important; opacity: 0; visibility: hidden; pointer-events: none; }
+        #gate h1 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(2.2rem, 7vw, 4.6rem);
+            line-height: 1.05;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ivoire);
+        }
+        #gate h1 .gate-amp {
+            display: block;
+            font-style: italic;
+            font-size: 0.5em;
+            letter-spacing: 0.1em;
+            color: var(--champagne);
+            margin: 0.2em 0;
+        }
+        #gate p {
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--gris);
+        }
+        #gate .gate-sub { font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--champagne); font-style: normal; }
+        #enter-btn {
+            margin-top: 1.4rem;
+            padding: 0.9rem 0 0.7rem;
+            background: none;
+            border: none;
+            border-bottom: 1px solid var(--champagne);
+            color: var(--ivoire);
+            font-family: var(--sans);
+            font-size: 0.7rem;
+            letter-spacing: 0.38em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.8s ease;
+        }
+        #enter-btn:hover, #enter-btn:focus-visible { color: var(--champagne); outline: none; }
 
-        /* ---------- Navigation ---------- */
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -119,7 +166,6 @@
         .nav-links a { transition: color 0.8s ease; }
         .nav-links a:hover, .nav-links a:focus-visible { color: var(--ivoire); }
 
-        /* ---------- Hero ---------- */
         .hero {
             min-height: 100vh;
             min-height: 100svh;
@@ -129,21 +175,41 @@
             padding: 7rem 0 2.5rem;
             background: radial-gradient(ellipse at 70% 40%, var(--noir-bleute) 0%, var(--noir) 65%);
         }
+        .hero-photo {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .hero-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 28%;
+            filter: brightness(0.42) saturate(0.85);
+        }
+        .hero-photo::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5,5,7,0.2), rgba(5,5,7,0.85));
+        }
         .hero .ghost {
             right: -4vw;
             top: 50%;
             transform: translateY(-50%);
             font-size: clamp(22rem, 70vw, 58rem);
+            z-index: 1;
             animation: drift 22s ease-in-out infinite;
         }
         .hero-top {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             display: flex;
             justify-content: space-between;
             align-items: baseline;
             gap: 1rem;
-            font-size: 0.68rem;
+            font-size: 0.66rem;
             letter-spacing: 0.34em;
             text-transform: uppercase;
             color: var(--gris);
@@ -156,7 +222,7 @@
         }
         .hero-main {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             max-width: 980px;
             margin: auto 0;
             padding-top: 4vh;
@@ -203,7 +269,7 @@
         }
         .hero-cta {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             align-self: flex-start;
             display: inline-flex;
             align-items: center;
@@ -221,7 +287,7 @@
             background-size: 100% 1px;
             color: var(--champagne);
         }
-        .sparks { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+        .sparks { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
         .spark {
             position: absolute;
             width: 2px;
@@ -232,18 +298,16 @@
             animation: twinkle 9s ease-in-out infinite;
         }
 
-        /* ---------- Intro ---------- */
+
         .intro {
             padding: clamp(9rem, 22vh, 16rem) 0;
             border-top: 1px solid var(--ligne-douce);
         }
         .intro-inner {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2.2rem;
             max-width: 760px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
+            display: grid;
+            gap: 2.2rem;
             text-align: center;
         }
         .intro h2 {
@@ -254,6 +318,7 @@
             letter-spacing: 0.1em;
             color: var(--ivoire);
         }
+        .intro h2 em { color: var(--champagne); }
         .intro p {
             font-family: var(--serif);
             font-style: italic;
@@ -262,7 +327,46 @@
             color: var(--gris);
         }
 
-        /* ---------- Amour ---------- */
+        .temps {
+            padding: clamp(8rem, 18vh, 13rem) 0;
+            background: var(--noir-bleute);
+            border-top: 1px solid var(--ligne-douce);
+            text-align: center;
+        }
+        .temps h2 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--champagne);
+            margin: 1.4rem 0 clamp(3rem, 8vh, 5rem);
+        }
+        .counter {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(0.5rem, 2vw, 2rem);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .counter-value {
+            display: block;
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(3.4rem, 13vw, 11rem);
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            color: var(--ivoire);
+        }
+        .counter-label {
+            display: block;
+            margin-top: 1.2rem;
+            font-size: 0.64rem;
+            letter-spacing: 0.34em;
+            text-transform: uppercase;
+            color: var(--gris);
+        }
+
         .amour {
             padding: clamp(6rem, 14vh, 11rem) 0;
             border-top: 1px solid var(--ligne-douce);
@@ -280,7 +384,6 @@
         }
         .amour-left .numero { display: block; margin-bottom: 1.4rem; }
         .amour-left h3 {
-            font-family: var(--sans);
             font-weight: 400;
             font-size: 0.8rem;
             letter-spacing: 0.32em;
@@ -289,9 +392,7 @@
             color: var(--ivoire);
             max-width: 240px;
         }
-        .amour-right {
-            grid-column: 5 / -1;
-        }
+        .amour-right { grid-column: 5 / -1; }
         .amour-word {
             font-family: var(--serif);
             font-weight: 300;
@@ -318,7 +419,32 @@
             color: var(--ivoire);
         }
 
-        /* ---------- Sans toi ---------- */
+        .duo {
+            padding: clamp(4rem, 10vh, 7rem) 0;
+            border-top: 1px solid var(--ligne-douce);
+        }
+        .duo-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: clamp(1.5rem, 4vw, 3.5rem);
+            align-items: start;
+        }
+        .duo figure:nth-child(2) { margin-top: clamp(4rem, 12vw, 9rem); }
+        .duo img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            filter: saturate(0.85) brightness(0.9);
+        }
+        .duo figcaption {
+            margin-top: 1.2rem;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+            color: var(--gris);
+        }
+
         .sans-toi {
             padding: clamp(7rem, 16vh, 12rem) 0;
             border-top: 1px solid var(--ligne-douce);
@@ -356,7 +482,52 @@
             color: var(--gris);
         }
 
-        /* ---------- Mois ---------- */
+
+        .gallery-wrap {
+            padding: clamp(7rem, 16vh, 11rem) 0;
+            border-top: 1px solid var(--ligne-douce);
+        }
+        .gallery-head {
+            max-width: 760px;
+            margin-bottom: clamp(3rem, 8vh, 5rem);
+        }
+        .gallery-head h2 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(2.6rem, 7vw, 5.6rem);
+            line-height: 1;
+            letter-spacing: 0.04em;
+            color: var(--ivoire);
+            margin-top: 1.2rem;
+        }
+        .gallery-head h2 em { color: var(--champagne); }
+        .gallery {
+            columns: 3 260px;
+            column-gap: clamp(1rem, 2.4vw, 2rem);
+        }
+        .gallery figure {
+            break-inside: avoid;
+            margin-bottom: clamp(2rem, 4vw, 3.2rem);
+        }
+        .gallery img {
+            display: block;
+            width: 100%;
+            height: auto;
+            filter: saturate(0.92) brightness(0.94);
+            transition: transform 1.6s cubic-bezier(.2,.7,.2,1), filter 1.6s ease;
+        }
+        .gallery figure:hover img { transform: scale(1.02); filter: saturate(1) brightness(1); }
+        .gallery figcaption {
+            margin-top: 0.8rem;
+            padding-left: 0.9rem;
+            border-left: 1px solid var(--ligne);
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.02rem;
+            line-height: 1.5;
+            color: var(--gris);
+        }
+
         .mois {
             padding: clamp(7rem, 16vh, 12rem) 0;
             border-top: 1px solid var(--ligne-douce);
@@ -436,61 +607,15 @@
             color: var(--gris);
         }
         .step.done::before { background: var(--ivoire); }
-        .step.done .step-num { color: var(--ivoire); }
         .step.current::before {
             background: var(--champagne);
             box-shadow: 0 0 0 6px rgba(200, 178, 143, 0.08);
         }
-        .step.current .step-num { color: var(--champagne); }
+        .step.current .step-num,
         .step.current .step-state { color: var(--champagne); }
         .step.upcoming { opacity: 0.32; }
         .step.upcoming::before { background: transparent; border: 1px solid var(--gris); }
 
-        /* ---------- Temps ---------- */
-        .temps {
-            padding: clamp(8rem, 18vh, 13rem) 0;
-            background: var(--noir);
-            border-top: 1px solid var(--ligne-douce);
-            text-align: center;
-        }
-        .temps h2 {
-            font-family: var(--serif);
-            font-weight: 300;
-            font-size: clamp(1.1rem, 2vw, 1.3rem);
-            letter-spacing: 0.4em;
-            text-transform: uppercase;
-            color: var(--champagne);
-            margin-bottom: clamp(3rem, 8vh, 5rem);
-        }
-        .counter {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: clamp(0.5rem, 2vw, 2rem);
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .counter-value {
-            display: block;
-            font-family: var(--serif);
-            font-weight: 300;
-            font-size: clamp(3.4rem, 13vw, 11rem);
-            line-height: 1;
-            font-variant-numeric: tabular-nums;
-            color: var(--ivoire);
-        }
-        .counter-label {
-            display: block;
-            margin-top: 1.2rem;
-            font-size: 0.64rem;
-            letter-spacing: 0.34em;
-            text-transform: uppercase;
-            color: var(--gris);
-        }
-        .counter-sep {
-            display: none;
-        }
-
-        /* ---------- Petit mot ---------- */
         .petit-mot {
             padding: clamp(7rem, 16vh, 12rem) 0;
             border-top: 1px solid var(--ligne-douce);
@@ -520,18 +645,26 @@
             text-transform: uppercase;
             color: var(--ivoire);
         }
-        .letter-body {
+        .letter-body p {
             font-family: var(--serif);
             font-weight: 300;
             font-style: italic;
-            font-size: clamp(1.45rem, 3vw, 2.15rem);
-            line-height: 1.55;
+            font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+            line-height: 1.6;
             color: var(--ivoire);
+            margin-bottom: 1.4rem;
+        }
+        .letter-body .letter-sign {
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--champagne);
+            font-style: normal;
         }
 
-        /* ---------- Footer ---------- */
         footer {
-            padding: clamp(6rem, 14vh, 9rem) 0 3.5rem;
+            padding: clamp(6rem, 14vh, 9rem) 0 7.5rem;
             border-top: 1px solid var(--ligne-douce);
             text-align: center;
         }
@@ -558,7 +691,45 @@
             opacity: 0.7;
         }
 
-        /* ---------- Animations ---------- */
+        #player {
+            position: fixed;
+            right: clamp(1rem, 3vw, 2rem);
+            bottom: clamp(1rem, 3vw, 2rem);
+            z-index: 150;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            max-width: calc(100vw - 2rem);
+            padding: 0.5rem 0.8rem;
+            background: rgba(5, 5, 7, 0.85);
+            border: 1px solid var(--ligne);
+            color: var(--ivoire);
+        }
+        .p-btn {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            color: var(--champagne);
+            cursor: pointer;
+        }
+        .p-btn svg { width: 16px; height: 16px; fill: currentColor; }
+        .p-btn:hover, .p-btn:focus-visible { color: var(--ivoire); outline: none; }
+        #track-name {
+            max-width: 40vw;
+            margin-left: 0.4rem;
+            font-size: 0.66rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--gris);
+        }
+
         @keyframes drift {
             0%, 100% { transform: translateY(-50%) translateX(0); }
             50% { transform: translateY(-51%) translateX(-1.2vw); }
@@ -572,7 +743,6 @@
             50% { opacity: 0.5; }
         }
 
-        /* ---------- Responsive ---------- */
         @media (max-width: 900px) {
             .amour-left { grid-column: 1 / -1; }
             .amour-right { grid-column: 1 / -1; margin-top: 2.5rem; }
@@ -587,8 +757,13 @@
 
             .hero { padding: 6.5rem 0 2rem; }
             .hero-top { font-size: 0.6rem; letter-spacing: 0.22em; }
-            .hero .ghost { font-size: 80vw; right: -18vw; opacity: 0.8; }
+            .hero .ghost { font-size: 80vw; right: -18vw; }
             .hero-copy { font-size: 0.92rem; }
+
+            .duo-grid { grid-template-columns: 1fr; }
+            .duo figure:nth-child(2) { margin-top: 0; }
+
+            .gallery { columns: 2 140px; }
 
             .timeline { grid-template-columns: 1fr; border-top: none; border-left: 1px solid var(--ligne); margin-left: 0.3rem; }
             .step { padding: 1.6rem 0 1.8rem 1.8rem; }
@@ -603,9 +778,9 @@
             .amour-word { font-size: clamp(5rem, 30vw, 8rem); }
             .sans-toi h2 { letter-spacing: 0.24em; }
             .mois-intro { max-width: none; }
+            #track-name { max-width: 30vw; }
         }
 
-        /* ---------- Mouvement réduit : contenu entièrement visible, sans animation ---------- */
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
             *, *::before, *::after {
@@ -613,12 +788,20 @@
                 transition: none !important;
             }
             .reveal { opacity: 1 !important; transform: none !important; }
-            .h-title.reveal.in { letter-spacing: 0.12em; }
             .sparks { display: none; }
         }
     </style>
 </head>
+
 <body>
+
+    <div id="gate">
+        <h1>Stephens<span class="gate-amp">&amp;</span>Maëlys</h1>
+        <p>une histoire, un son</p>
+        <p class="gate-sub">M. Sullivan &amp; Mme Sullivan</p>
+        <button id="enter-btn" type="button">Entrer</button>
+    </div>
+
     <nav>
         <div class="wrap">
             <div class="nav-brand">S&amp;M</div>
@@ -632,8 +815,10 @@
     </nav>
 
     <main>
-        <!-- HERO -->
         <header class="hero" id="accueil">
+            <div class="hero-photo" aria-hidden="true">
+                <img src="assets/hero.jpg" alt="">
+            </div>
             <div class="ghost" aria-hidden="true">08</div>
             <div class="sparks" id="sparks" aria-hidden="true"></div>
 
@@ -643,7 +828,7 @@
             </div>
 
             <div class="wrap hero-main">
-                <h1 class="h-title reveal in">
+                <h1 class="reveal in">
                     <span class="name">Stephens</span>
                     <span class="amp">×</span>
                     <span class="name">Maëlys</span>
@@ -660,7 +845,6 @@
             </div>
         </header>
 
-        <!-- INTRO -->
         <section class="intro reveal" id="notre-histoire">
             <div class="wrap">
                 <div class="intro-inner">
@@ -671,46 +855,9 @@
             </div>
         </section>
 
-        <!-- AMOUR -->
-        <section class="amour" id="amour">
-            <div class="wrap amour-grid">
-                <div class="amour-left reveal">
-                    <span class="numero">01</span>
-                    <h3>Mon amour pour toi en un mot</h3>
-                </div>
-                <div class="amour-right reveal">
-                    <div class="amour-word">L'art.</div>
-                    <div class="amour-line"></div>
-                    <p class="amour-desc">si l'amour était un art tu serais ma seule exposition</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SANS TOI -->
-        <section class="sans-toi">
-            <div class="ghost" aria-hidden="true">02</div>
-            <div class="wrap sans-toi-inner reveal">
-                <div class="eyebrow">La vie sans toi</div>
-                <h2>La vie sans toi</h2>
-                <p class="sans-toi-quote">La vie sans toi, ce serait comme <em>un système solaire sans soleil.</em></p>
-                <p class="sans-toi-text">Un vide qu'on ne sait pas nommer, mais qu'on sent au plus profond de soi. Avec toi, tout trouve sa place.</p>
-            </div>
-        </section>
-
-        <!-- MOIS -->
-        <section class="mois" id="mois">
-            <div class="wrap">
-                <div class="mois-head reveal">
-                    <h2>Nos mois</h2>
-                    <p class="mois-intro">Chaque mois ajoute une nouvelle page à notre histoire.</p>
-                </div>
-                <div class="timeline reveal" id="monthsContainer"></div>
-            </div>
-        </section>
-
-        <!-- TEMPS -->
         <section class="temps" id="temps">
             <div class="wrap reveal">
+                <span class="eyebrow">depuis le 8 septembre 2026</span>
                 <h2>Notre temps</h2>
                 <div class="counter">
                     <div>
@@ -733,41 +880,174 @@
             </div>
         </section>
 
-        <!-- PETIT MOT -->
+        <section class="amour" id="amour">
+            <div class="wrap amour-grid">
+                <div class="amour-left reveal">
+                    <span class="numero">02</span>
+                    <h3>Mon amour pour toi en un mot</h3>
+                </div>
+                <div class="amour-right reveal">
+                    <div class="amour-word">L'art.</div>
+                    <div class="amour-line"></div>
+                    <p class="amour-desc">si l'amour était un art tu serais ma seule exposition</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="duo">
+            <div class="wrap duo-grid">
+                <figure class="reveal">
+                    <img src="assets/duo-1.jpg" alt="Un balcon, à Paris" loading="lazy">
+                    <figcaption>On irait à Paris juste pour s'embrasser sur un balcon, bêtement romantique.</figcaption>
+                </figure>
+                <figure class="reveal">
+                    <img src="assets/duo-2.jpg" alt="Deux mains l'une sur l'autre" loading="lazy">
+                    <figcaption>On resterait assis comme ça, nos mains l'une sur l'autre, sans bouger.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="sans-toi">
+            <div class="ghost" aria-hidden="true">03</div>
+            <div class="wrap sans-toi-inner reveal">
+                <span class="eyebrow">La vie sans toi</span>
+                <h2>La vie sans toi</h2>
+                <p class="sans-toi-quote">La vie sans toi, ce serait comme <em>un système solaire sans soleil.</em></p>
+                <p class="sans-toi-text">Un vide qu'on ne sait pas nommer, mais qu'on sent au plus profond de soi. Avec toi, tout trouve sa place.</p>
+            </div>
+        </section>
+
+        <section class="gallery-wrap">
+            <div class="wrap">
+                <div class="gallery-head reveal">
+                    <span class="eyebrow">Nos instants</span>
+                    <h2>Chaque image porte un peu<br>de ce qu'on <em>construit</em> ensemble.</h2>
+                </div>
+                <div class="gallery">
+                    <figure class="reveal"><img src="assets/gallery-01.jpg" alt="" loading="lazy"><figcaption>Si on était au même endroit, je t'embrasserais à l'heure où le ciel change de couleur.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-02.jpg" alt="" loading="lazy"><figcaption>On courrait vers la mer, juste pour sentir l'eau glacée nous surprendre.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-03.jpg" alt="" loading="lazy"><figcaption>Il pleuvrait, et je refuserais qu'on rentre.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-04.jpg" alt="" loading="lazy"><figcaption>Je te chipoterais dans la cuisine en faisant semblant de t'aider à cuisiner.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-05.jpg" alt="" loading="lazy"><figcaption>On resterait dehors bien après qu'il fasse froid, juste pour un câlin de plus.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-06.jpg" alt="" loading="lazy"><figcaption>On se prendrait en photo bêtement, juste parce qu'on est bien.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-07.jpg" alt="" loading="lazy"><figcaption>On traînerait en peignoir un dimanche entier, sans réveil.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-08.jpg" alt="" loading="lazy"><figcaption>On boirait un verre en regardant la ville, sans rien dire.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-09.jpg" alt="" loading="lazy"><figcaption>On se déguiserait pour rien, juste pour faire les idiots dans la rue.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-10.jpg" alt="" loading="lazy"><figcaption>Je te regarderais te préparer, en retard exprès pour en profiter.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-11.jpg" alt="" loading="lazy"><figcaption>On regarderait un feu d'artifice en oubliant complètement de le filmer.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-12.jpg" alt="" loading="lazy"><figcaption>On se figerait devant un miroir, juste pour un selfie de plus.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-13.jpg" alt="" loading="lazy"><figcaption>On danserait sans musique, juste parce que t'en aurais envie.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-14.jpg" alt="" loading="lazy"><figcaption>On s'assiérait dans le sable jusqu'à ce que la marée nous chasse.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-15.jpg" alt="" loading="lazy"><figcaption>On marcherait sans but, juste pour rester dehors encore un peu.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-16.jpg" alt="" loading="lazy"><figcaption>On couvrirait un mur de photos de nous, polaroid après polaroid.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-17.jpg" alt="" loading="lazy"><figcaption>On resterait sur le canapé toute la soirée, sans but précis, juste toi et moi.</figcaption></figure>
+                    <figure class="reveal"><img src="assets/gallery-18.jpg" alt="" loading="lazy"><figcaption>Je prendrais ta main, et je ne la lâcherais plus de la soirée.</figcaption></figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="mois" id="mois">
+            <div class="wrap">
+                <div class="mois-head reveal">
+                    <h2>Nos mois</h2>
+                    <p class="mois-intro">Chaque mois ajoute une nouvelle page à notre histoire.</p>
+                </div>
+                <div class="timeline reveal" id="monthsContainer"></div>
+            </div>
+        </section>
+
         <section class="petit-mot" id="petit-mot">
             <div class="wrap">
                 <div class="letter reveal">
                     <div class="letter-head">
-                        <span class="numero">03</span>
+                        <span class="numero">04</span>
                         <h2>Un petit mot</h2>
                     </div>
-                    <p class="letter-body">
-                        Je ne sais pas tout ce que l'avenir nous réserve, mais je sais que je veux continuer à écrire cette histoire avec toi.
-                    </p>
+                    <div class="letter-body">
+                        <p>Maëlys,</p>
+                        <p>Un mois ! Déjà un mois à t'écrire avant de dormir, à sourire tout seul en pensant à toi. Un mois à être un peu plus accro à toi chaque jour qui passe.</p>
+                        <p>Joyeux premier mois, toi. Il y en aura plein d'autres à fêter, et j'ai hâte de tous les vivre avec toi.</p>
+                        <p>Je t'aime. 🤍</p>
+                        <div class="letter-sign">— Arthur</div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- FOOTER -->
     <footer>
         <div class="wrap">
             <div class="footer-brand">Stephens × Maëlys</div>
             <div class="footer-tagline">Love doesn't cost a thing — 2026</div>
+            <div class="footer-tagline">M. Sullivan &amp; Mme Sullivan</div>
             <div class="footer-date">08.09.2026 — ∞</div>
         </div>
     </footer>
 
+    <div id="player" class="hidden">
+        <button class="p-btn" id="prev-btn" type="button" aria-label="Précédent">
+            <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l10-6v12z"/></svg>
+        </button>
+        <button id="play-btn" class="p-btn" type="button" aria-label="Lecture / pause">
+            <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pause-icon" viewBox="0 0 24 24" class="hidden"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+        </button>
+        <button class="p-btn" id="next-btn" type="button" aria-label="Suivant">
+            <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM4.5 6l10 6-10 6z"/></svg>
+        </button>
+        <span id="track-name">Amour toxic</span>
+    </div>
+
+    <audio id="audio-el" preload="none"></audio>
+
+
     <script>
-        const START = new Date(2026, 8, 8); // 8 septembre 2026, minuit (heure locale)
+        const tracks = [
+            { src: "assets/amour-toxic.mp3", name: "Amour toxic" },
+            { src: "assets/kayson-cest-toi.mp3", name: "C'est toi — Kayson" },
+            { src: "assets/alve-et-si-cetait-tout.mp3", name: "Et si c'était tout — Alvé" }
+        ];
+        let trackIndex = 0;
+        const audioEl = document.getElementById('audio-el');
+        const trackNameEl = document.getElementById('track-name');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+        const player = document.getElementById('player');
+
+        function loadTrack(i, autoplay) {
+            trackIndex = (i + tracks.length) % tracks.length;
+            audioEl.src = tracks[trackIndex].src;
+            trackNameEl.textContent = tracks[trackIndex].name;
+            if (autoplay) audioEl.play().catch(() => {});
+        }
+        function setPlayingUI(isPlaying) {
+            playIcon.classList.toggle('hidden', isPlaying);
+            pauseIcon.classList.toggle('hidden', !isPlaying);
+        }
+        audioEl.addEventListener('play', () => setPlayingUI(true));
+        audioEl.addEventListener('pause', () => setPlayingUI(false));
+        audioEl.addEventListener('ended', () => loadTrack(trackIndex + 1, true));
+
+        document.getElementById('play-btn').addEventListener('click', () => {
+            if (!audioEl.src) loadTrack(trackIndex, false);
+            if (audioEl.paused) audioEl.play().catch(() => {}); else audioEl.pause();
+        });
+        document.getElementById('next-btn').addEventListener('click', () => loadTrack(trackIndex + 1, true));
+        document.getElementById('prev-btn').addEventListener('click', () => loadTrack(trackIndex - 1, true));
+
+        document.getElementById('enter-btn').addEventListener('click', () => {
+            document.getElementById('gate').classList.add('hidden');
+            player.classList.remove('hidden');
+            loadTrack(0, true);
+        });
+
+        const START = new Date(2026, 8, 8);
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // Ajoute n mois à une date, en gardant le même jour du mois
         function addMonths(date, n) {
             return new Date(date.getFullYear(), date.getMonth() + n, date.getDate());
         }
 
-        // Nombre de mois complets écoulés depuis START à l'instant `now`
         function completedMonths(now) {
             let n = 0;
             while (addMonths(START, n + 1) <= now) n++;
@@ -779,7 +1059,6 @@
             return `${String(d.getDate()).padStart(2, '0')} ${MOIS_FR[d.getMonth()].toUpperCase()} ${d.getFullYear()}`;
         }
 
-        // Timeline : mois accomplis + les 2 prochains (à venir, non accomplis)
         function renderMonths(now = new Date()) {
             const container = document.getElementById('monthsContainer');
             const done = completedMonths(now);
@@ -802,21 +1081,15 @@
             container.innerHTML = html;
         }
 
-        // Compteur temps réel
         function updateCounter(now = new Date()) {
             const diff = Math.max(0, now - START);
             const total = Math.floor(diff / 1000);
-            const days = Math.floor(total / 86400);
-            const hours = Math.floor((total % 86400) / 3600);
-            const minutes = Math.floor((total % 3600) / 60);
-            const seconds = total % 60;
-            document.getElementById('days').textContent = days;
-            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            document.getElementById('days').textContent = Math.floor(total / 86400);
+            document.getElementById('hours').textContent = String(Math.floor((total % 86400) / 3600)).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(total % 60).padStart(2, '0');
         }
 
-        // Révélation au scroll
         const reveals = document.querySelectorAll('.reveal');
         if (reduceMotion || !('IntersectionObserver' in window)) {
             reveals.forEach(el => el.classList.add('in'));
@@ -832,7 +1105,6 @@
             reveals.forEach(el => observer.observe(el));
         }
 
-        // Petites étoiles très discrètes dans le hero
         if (!reduceMotion) {
             const sparks = document.getElementById('sparks');
             for (let i = 0; i < 14; i++) {
@@ -849,7 +1121,6 @@
         renderMonths();
         updateCounter();
         setInterval(() => updateCounter(), 1000);
-        // Re-calcule la timeline à minuit, pour ne jamais afficher un mois avant qu'il soit atteint
         setInterval(() => renderMonths(), 60 * 1000);
     </script>
 </body>
