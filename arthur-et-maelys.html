@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arthur & Maëlys - Notre Histoire</title>
+    <title>Stephens & Maëlys</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -16,13 +16,23 @@
         }
 
         :root {
-            --primary: #2d1b4e;
-            --secondary: #8b5cf6;
-            --accent: #f59e0b;
-            --light: #f8fafc;
-            --text-dark: #1e293b;
-            --text-light: #64748b;
-            --border: #e2e8f0;
+            --bg-dark: #07070a;
+            --bg-card: #0f0f14;
+            --accent-gold: #d4af85;
+            --accent-beige: #c9b8a8;
+            --text-light: #e8e6e1;
+            --text-muted: #a8a399;
+            --line-subtle: rgba(212, 175, 133, 0.08);
+            --line-accent: rgba(212, 175, 133, 0.15);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
 
         html {
@@ -30,25 +40,70 @@
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-dark);
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
+            font-family: 'Jost', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
         }
 
+        /* ========== FOND ANIMÉ ==========*/
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(212, 175, 133, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(201, 184, 168, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Particules étoiles discrètes */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20% 30%, rgba(212, 175, 133, 0.1), rgba(212, 175, 133, 0)),
+                radial-gradient(2px 2px at 60% 70%, rgba(212, 175, 133, 0.08), rgba(212, 175, 133, 0)),
+                radial-gradient(1px 1px at 50% 50%, rgba(212, 175, 133, 0.12), rgba(212, 175, 133, 0)),
+                radial-gradient(1px 1px at 80% 10%, rgba(212, 175, 133, 0.09), rgba(212, 175, 133, 0)),
+                radial-gradient(2px 2px at 90% 60%, rgba(212, 175, 133, 0.1), rgba(212, 175, 133, 0)),
+                radial-gradient(1px 1px at 30% 80%, rgba(212, 175, 133, 0.08), rgba(212, 175, 133, 0)),
+                radial-gradient(1px 1px at 70% 40%, rgba(212, 175, 133, 0.11), rgba(212, 175, 133, 0));
+            background-size: 200% 200%;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 0;
+            animation: shimmer 8s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+
+        /* ========== NAVIGATION ==========*/
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
             z-index: 1000;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            background: rgba(7, 7, 10, 0.8);
+            border-bottom: 1px solid var(--line-subtle);
+            padding: 1.2rem 2rem;
         }
 
-        .nav-content {
+        nav .container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -57,26 +112,26 @@
         }
 
         .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            text-transform: uppercase;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             transition: color 0.3s ease;
             position: relative;
         }
@@ -84,12 +139,16 @@
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -4px;
             left: 0;
             width: 0;
-            height: 2px;
-            background: var(--secondary);
+            height: 1px;
+            background: var(--accent-gold);
             transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
         }
 
         .nav-links a:hover::after {
@@ -97,83 +156,124 @@
         }
 
         @media (max-width: 768px) {
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
             .nav-links {
-                display: none;
+                gap: 1.5rem;
+                justify-content: center;
+            }
+
+            nav {
+                padding: 1rem;
             }
         }
 
+        /* ========== CONTENT WRAPPER ==========*/
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ========== HERO ==========*/
         .hero {
-            margin-top: 60px;
-            min-height: calc(100vh - 60px);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            padding: 6rem 2rem 4rem;
+            margin-top: 60px;
+            animation: fadeInUp 1.2s ease-out;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            animation: fadeInUp 1s ease-out;
+        .hero-content h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
         }
 
         .hero-subtitle {
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             letter-spacing: 2px;
+            color: var(--text-muted);
             text-transform: uppercase;
-            margin-bottom: 1rem;
-            opacity: 0.9;
+            margin-bottom: 2rem;
         }
 
-        .hero-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 900;
-            margin: 1rem 0;
-            line-height: 1.2;
+        .heart-symbol {
+            display: inline-block;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
         }
 
         .hero-description {
-            font-size: 1.3rem;
-            margin-top: 1.5rem;
-            opacity: 0.95;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
             max-width: 600px;
+            margin: 0 auto 2.5rem;
+            font-weight: 300;
         }
 
         .cta-button {
             display: inline-block;
-            margin-top: 2.5rem;
             padding: 1rem 2.5rem;
-            background: var(--accent);
-            color: white;
+            border: 1px solid var(--accent-gold);
+            background: transparent;
+            color: var(--accent-gold);
             text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: 'Jost', sans-serif;
+            font-weight: 500;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
+            background: var(--accent-gold);
+            color: var(--bg-dark);
         }
 
         @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== SECTIONS ==========*/
+        section {
+            padding: 8rem 0;
+            border-top: 1px solid var(--line-subtle);
+            opacity: 0;
+            animation: fadeInSection 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInSection {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -184,367 +284,359 @@
             }
         }
 
-        .story {
-            max-width: 1200px;
-            margin: 5rem auto;
-            padding: 4rem 2rem;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        }
+        section:nth-child(2) { animation-delay: 0.1s; }
+        section:nth-child(3) { animation-delay: 0.2s; }
+        section:nth-child(4) { animation-delay: 0.3s; }
+        section:nth-child(5) { animation-delay: 0.4s; }
+        section:nth-child(6) { animation-delay: 0.5s; }
+        section:nth-child(7) { animation-delay: 0.6s; }
 
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--secondary), var(--accent));
-            border-radius: 2px;
-        }
-
-        .story-content {
-            font-size: 1.1rem;
-            line-height: 1.8;
+        section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 2.5rem;
             color: var(--text-light);
+            text-align: center;
+        }
+
+        /* ========== SECTION AMOUR ==========*/
+        .section-amour .main-title {
+            font-size: clamp(3.5rem, 8vw, 5rem);
+            color: var(--accent-gold);
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin: 2rem 0;
+        }
+
+        .section-amour .description {
+            font-size: 1.15rem;
+            color: var(--text-muted);
             text-align: center;
             max-width: 700px;
             margin: 0 auto;
+            line-height: 1.9;
+            font-style: italic;
         }
 
-        .counter-section {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 4rem 2rem;
+        /* ========== SECTION VIE SANS TOI ==========*/
+        .section-sans-toi {
+            background: linear-gradient(180deg, 
+                rgba(212, 175, 133, 0.02) 0%, 
+                rgba(7, 7, 10, 0) 100%);
+        }
+
+        .section-sans-toi .quote {
+            font-size: 1.3rem;
+            color: var(--accent-beige);
             text-align: center;
-            margin: 3rem 0;
+            font-style: italic;
+            max-width: 700px;
+            margin: 2rem auto;
+            line-height: 1.8;
         }
 
-        .counter-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
+        .section-sans-toi .description {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 600px;
+            margin: 2rem auto 0;
+            line-height: 1.8;
         }
 
-        .counter-grid {
+        /* ========== SECTION MOIS ==========*/
+        .months-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            margin-top: 2rem;
-        }
-
-        .counter-item {
-            padding: 2rem 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .counter-item:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        .counter-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--accent);
-        }
-
-        .counter-label {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 0.5rem;
-            opacity: 0.9;
-        }
-
-        .gallery-section {
-            max-width: 1200px;
-            margin: 5rem auto;
-            padding: 0 2rem;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
             margin-top: 3rem;
         }
 
-        .gallery-item {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            height: 300px;
-            cursor: pointer;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-        }
-
-        .gallery-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.7), rgba(118, 75, 162, 0.7));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 2;
-        }
-
-        .gallery-item:hover::before {
-            opacity: 1;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            color: white;
-            padding: 2rem 1.5rem 1.5rem;
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-            z-index: 3;
-        }
-
-        .gallery-item:hover .gallery-caption {
-            transform: translateY(0);
-        }
-
-        .cta-section {
+        .month-card {
+            background: linear-gradient(135deg, 
+                rgba(212, 175, 133, 0.05) 0%, 
+                rgba(201, 184, 168, 0.02) 100%);
+            border: 1px solid var(--line-accent);
+            padding: 1.5rem;
             text-align: center;
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            margin: 3rem 0;
-            border-radius: 20px;
-            margin-left: 2rem;
-            margin-right: 2rem;
+            border-radius: 8px;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
         }
 
-        .cta-section h2 {
-            font-family: 'Playfair Display', serif;
+        .month-card.current {
+            background: linear-gradient(135deg, 
+                rgba(212, 175, 133, 0.12) 0%, 
+                rgba(201, 184, 168, 0.06) 100%);
+            border-color: var(--accent-gold);
+            animation: subtle-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes subtle-glow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(212, 175, 133, 0.1);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(212, 175, 133, 0.15);
+            }
+        }
+
+        .month-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .month-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .month-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-beige);
+        }
+
+        /* ========== SECTION TEMPS ==========*/
+        .time-counter {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .time-item {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, 
+                rgba(212, 175, 133, 0.05) 0%, 
+                rgba(201, 184, 168, 0.02) 100%);
+            border: 1px solid var(--line-accent);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .time-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .time-number {
+            font-family: 'Cormorant Garamond', serif;
             font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-weight: 500;
+            color: var(--accent-gold);
+            line-height: 1;
         }
 
-        .cta-section p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
+        .time-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.8rem;
         }
 
-        footer {
-            background: var(--primary);
-            color: white;
+        /* ========== SECTION PETIT MOT ==========*/
+        .petit-mot {
             text-align: center;
-            padding: 3rem 2rem;
-            margin-top: 5rem;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            font-style: italic;
+            padding: 3rem 0;
+            border-top: 1px solid var(--line-subtle);
+            border-bottom: 1px solid var(--line-subtle);
+        }
+
+        /* ========== FOOTER ==========*/
+        footer {
+            background: linear-gradient(180deg, 
+                rgba(7, 7, 10, 0) 0%, 
+                rgba(15, 15, 20, 1) 100%);
+            border-top: 1px solid var(--line-subtle);
+            padding: 6rem 2rem;
+            text-align: center;
+            margin-top: 8rem;
         }
 
         footer .logo {
-            color: white;
-            -webkit-text-fill-color: unset;
-            background: unset;
-            margin-bottom: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
         }
 
         footer p {
-            opacity: 0.8;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
             margin: 0.5rem 0;
         }
 
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .story {
-            animation: slideInLeft 0.8s ease-out;
-        }
-
+        /* ========== RESPONSIVE ==========*/
         @media (max-width: 768px) {
-            .story {
-                margin: 2rem 1rem;
-                padding: 2rem 1.5rem;
+            section {
+                padding: 5rem 0;
             }
 
-            .section-title {
-                font-size: 2rem;
+            .hero {
+                margin-top: 120px;
+                padding: 4rem 1.5rem 3rem;
             }
 
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .counter-grid {
+            .months-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
 
-            .gallery-grid {
+            .time-counter {
+                gap: 1rem;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .time-item {
+                padding: 1.5rem 1rem;
+            }
+
+            .time-number {
+                font-size: 2rem;
+            }
+
+            footer {
+                padding: 4rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 3rem 0;
+            }
+
+            .hero {
+                padding: 2rem 1rem 2rem;
+            }
+
+            section h2 {
+                margin-bottom: 1.5rem;
+            }
+
+            .months-grid,
+            .time-counter {
                 grid-template-columns: 1fr;
             }
 
-            .cta-section {
-                margin-left: 1rem;
-                margin-right: 1rem;
+            .cta-button {
+                padding: 0.9rem 2rem;
+                font-size: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav>
-        <div class="nav-content">
-            <div class="logo">A & M</div>
+        <div class="container">
+            <div class="logo">S & M</div>
             <ul class="nav-links">
-                <li><a href="#story">Notre Histoire</a></li>
-                <li><a href="#timeline">Timeline</a></li>
-                <li><a href="#gallery">Galerie</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#amour">Amour</a></li>
+                <li><a href="#temps">Temps</a></li>
+                <li><a href="#mois">Mois</a></li>
             </ul>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-subtitle">✨ Notre amour est éternel ✨</div>
-            <h1 class="hero-title">Arthur & Maëlys</h1>
-            <p class="hero-description">Une histoire d'amour écrite par deux âmes qui se sont trouvées</p>
-            <a href="#story" class="cta-button">Découvrir notre histoire</a>
-        </div>
-    </section>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Stephens <span class="heart-symbol">♡</span> Maëlys</h1>
+                <div class="hero-subtitle">8 septembre 2026 · pour toujours</div>
+                <p class="hero-description">Deux personnes. Une histoire. Et tout ce qui reste à écrire ensemble.</p>
+                <a href="#amour" class="cta-button">Découvrir</a>
+            </div>
+        </section>
 
-    <section class="story" id="story">
-        <h2 class="section-title">Notre Histoire</h2>
-        <div class="story-content">
-            <p>Il y a des voix qu'on reconnaîtrait entre mille. Il y a des liens qui ne tiennent pas à la distance, ni au temps qu'il faut encore attendre. La tienne est de ceux-là.</p>
-            <p style="margin-top: 1.5rem;">Voici un endroit rien qu'à nous, pour tout ce qu'on se dit et tout ce qu'on partage. Un espace où notre amour peut briller sans limite.</p>
-        </div>
-    </section>
+        <!-- Section Amour -->
+        <section class="section-amour" id="amour">
+            <div class="container">
+                <h2>mon amour pour toi en un mot</h2>
+                <div class="main-title">L'art.</div>
+                <p class="description">si l'amour était un art tu serais ma seule exposition</p>
+            </div>
+        </section>
 
-    <section class="counter-section" id="timeline">
-        <h2 class="counter-title">Depuis cette nuit du 8-9 septembre</h2>
-        <div class="counter-grid">
-            <div class="counter-item">
-                <div class="counter-number" id="days">0</div>
-                <div class="counter-label">Jours</div>
+        <!-- Section Vie Sans Toi -->
+        <section class="section-sans-toi">
+            <div class="container">
+                <h2>La vie sans toi</h2>
+                <p class="quote">La vie sans toi, ce serait comme un système solaire sans soleil.</p>
+                <p class="description">Tu apportes lumière, chaleur et sens à chaque instant. Avec toi, le monde trouve sa place, son équilibre et sa raison d'être.</p>
             </div>
-            <div class="counter-item">
-                <div class="counter-number" id="hours">0</div>
-                <div class="counter-label">Heures</div>
-            </div>
-            <div class="counter-item">
-                <div class="counter-number" id="minutes">0</div>
-                <div class="counter-label">Minutes</div>
-            </div>
-            <div class="counter-item">
-                <div class="counter-number" id="seconds">0</div>
-                <div class="counter-label">Secondes</div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="gallery-section" id="gallery">
-        <h2 class="section-title">Nos Instants Magiques</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=500&h=500&fit=crop" alt="Moment 1">
-                <div class="gallery-caption">
-                    <h3>Premiers pas</h3>
-                </div>
+        <!-- Section Mois -->
+        <section class="section-mois" id="mois">
+            <div class="container">
+                <h2>Nos mois</h2>
+                <p style="text-align: center; color: var(--text-muted); font-size: 1rem; margin-bottom: 2rem;">Chaque mois ajoute une nouvelle page à notre histoire.</p>
+                <div class="months-grid" id="monthsContainer"></div>
             </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1533627332313-be7174bf27cb?w=500&h=500&fit=crop" alt="Moment 2">
-                <div class="gallery-caption">
-                    <h3>Couchers de soleil</h3>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1515762141207-7a88fb213ce9?w=500&h=500&fit=crop" alt="Moment 3">
-                <div class="gallery-caption">
-                    <h3>Moments précieux</h3>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500&h=500&fit=crop" alt="Moment 4">
-                <div class="gallery-caption">
-                    <h3>Aventures</h3>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1525763185298-1b434c919eba?w=500&h=500&fit=crop" alt="Moment 5">
-                <div class="gallery-caption">
-                    <h3>Sourires partagés</h3>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop" alt="Moment 6">
-                <div class="gallery-caption">
-                    <h3>Rêves ensemble</h3>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="cta-section" id="contact">
-        <h2>Chaque jour avec toi est une bénédiction</h2>
-        <p>Merci de faire partie de mon histoire</p>
-        <a href="#" class="cta-button">Continuer l'aventure</a>
-    </section>
+        <!-- Section Temps -->
+        <section class="section-temps" id="temps">
+            <div class="container">
+                <h2>Notre temps</h2>
+                <div class="time-counter">
+                    <div class="time-item">
+                        <div class="time-number" id="days">0</div>
+                        <div class="time-label">jours</div>
+                    </div>
+                    <div class="time-item">
+                        <div class="time-number" id="hours">0</div>
+                        <div class="time-label">heures</div>
+                    </div>
+                    <div class="time-item">
+                        <div class="time-number" id="minutes">0</div>
+                        <div class="time-label">minutes</div>
+                    </div>
+                    <div class="time-item">
+                        <div class="time-number" id="seconds">0</div>
+                        <div class="time-label">secondes</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <!-- Section Petit Mot -->
+        <section>
+            <div class="container">
+                <p class="petit-mot">Je ne sais pas tout ce que l'avenir nous réserve, mais je sais que je veux continuer à écrire cette histoire avec toi.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
     <footer>
-        <div class="logo">Arthur & Maëlys</div>
-        <p>Créé avec ❤️</p>
-        <p>&copy; 2026 - Notre Amour</p>
+        <div class="logo">Stephens & Maëlys</div>
+        <p>Love doesn't cost a thing — 2026</p>
     </footer>
 
     <script>
+        // Compteur temps réel
         function updateCounter() {
             const startDate = new Date('2025-09-08T00:00:00').getTime();
             const now = new Date().getTime();
@@ -559,17 +651,56 @@
             document.getElementById('hours').textContent = hours;
             document.getElementById('minutes').textContent = minutes;
             document.getElementById('seconds').textContent = seconds;
+
+            return { days, hours, minutes, seconds };
         }
 
+        // Génération des mois
+        function generateMonths() {
+            const startDate = new Date('2025-09-08');
+            const now = new Date();
+            const container = document.getElementById('monthsContainer');
+            container.innerHTML = '';
+
+            let currentDate = new Date(startDate);
+            let monthCount = 1;
+
+            while (currentDate <= now) {
+                const nextDate = new Date(currentDate);
+                nextDate.setMonth(nextDate.getMonth() + 1);
+                
+                const isCurrent = currentDate <= now && nextDate > now;
+                const formattedDate = currentDate.toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                const monthCard = document.createElement('div');
+                monthCard.className = `month-card ${isCurrent ? 'current' : ''}`;
+                monthCard.innerHTML = `
+                    <div class="month-number">${monthCount} mois</div>
+                    <div class="month-date">${formattedDate}</div>
+                `;
+                container.appendChild(monthCard);
+
+                currentDate = nextDate;
+                monthCount++;
+            }
+        }
+
+        // Initialisation
         updateCounter();
         setInterval(updateCounter, 1000);
+        generateMonths();
 
+        // Smooth scroll pour les liens de navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
